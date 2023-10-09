@@ -6,6 +6,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 # Added for local install
 import os
+import shutil
 
 # Added to remove warnings
 import warnings
@@ -50,6 +51,21 @@ def download_model(selected_model):
     tokenizer.save_pretrained(output_model_dir)
     st.sidebar.success(f"{selected_model} has been downloaded.")
 
+# Function to delete the model
+def delete_model(selected_model):
+    output_model_dir = f"models/{selected_model}"
+    model_path = os.path.join(output_model_dir)
+    if os.path.exists(model_path):
+        try:
+            # Use shutil.rmtree to delete the directory and its contents
+            shutil.rmtree(model_path)
+            st.sidebar.success(f"{selected_model} has been deleted.")
+        except Exception as e:
+            st.sidebar.error(f"Error deleting {selected_model}: {str(e)}")
+    else:
+        st.sidebar.warning(f"{selected_model} not found.")
+
+
 # Create a Streamlit sidebar
 st.sidebar.title('Models and Parameters')
 
@@ -62,6 +78,16 @@ top_p = st.sidebar.slider('Top P', min_value=0.01, max_value=1.0, value=0.9, ste
 max_length = st.sidebar.slider('Max Length', min_value=32, max_value=128, value=120, step=8)
 
 # Create a button to download the selected model
+if st.sidebar.button('Run Model'):
+    run_model(selected_model)
+
+# Create a button to download the selected model
 if st.sidebar.button('Download Model'):
     download_model(selected_model)
+
+# Create a button to delete the selected model
+if st.sidebar.button('Delete Model'):
+    delete_model(selected_model)
+
+
 
