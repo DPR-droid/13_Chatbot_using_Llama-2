@@ -162,13 +162,12 @@ $RECYCLE.BIN/
 *LibreOffice*
 *.zip
 *.pdf
+*.bin
 
 # Windows shortcuts
 *.lnk
 
 # Ignore folder
 dialogsum/
-flan-t5-base-checkpoint/
-flan-dialogue-summary-checkpoint/
-peft-dialogue-summary-training/
-roberta-hate-speech-dynabench-r4-target/
+Llama-2-7b-Chat-GPTQ/
+Python-13B-V1.0-GPTQ/
